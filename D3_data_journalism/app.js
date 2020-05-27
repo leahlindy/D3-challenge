@@ -26,8 +26,28 @@ var chartGroup = svg.append("g")
 .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 //Load the data with d3.csv from data.csv file
-d3.csv("data.csv").then(function(data){
-    console.log(data);
+d3.csv("data.csv").then(function(dataOutcomes){
+    console.log(dataOutcomes);
+    
+    //Type cast data for variables needed in scatter (poverty, healthcate, smokes, age)
+    dataOutcomes.forEach(function(data) {
+        data.poverty = +data.poverty;
+        data.healthcare = +data.healthcare;
+        data.smokes = +data.smokes;
+        data.age = +data.age;
+        data.obesity = +data.obesity;
+        });
+    
+        // Create a linear scale for the horizontal/vertical axis.
+        // 1. healthcare v poverty
+        var xLinearPoverty = d3.scaleLinear()
+        .domain([0, d3.max(dataOutcomes, d => d.poverty)])
+        .range([chartHeight, 0]);
+        var yLinearHealthcare = d3.scaleLinear()
+        .domain([0, d3.max(dataOutcomes, d => d.healthcare)])
+        .range([chartHeight, 0]);
+
+
 }).catch(function(error) {
     console.log(error);
 })
