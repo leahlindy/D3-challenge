@@ -15,7 +15,7 @@ var chartHeight = svgHeight - margin.top - margin.bottom;
 
 //Set SVG element with d3 within the html body (width and height attributes included)
 // Select body, append SVG area to it, and set its dimensions
-var svg = d3.select("body")
+var svg = d3.select("#scatter")
 .append("svg")
 .attr("width", svgWidth)
 .attr("height", svgHeight);
@@ -38,15 +38,41 @@ d3.csv("data.csv").then(function(dataOutcomes){
         data.obesity = +data.obesity;
         });
     
-        // Create a linear scale for the horizontal/vertical axis.
-        // 1. healthcare v poverty
-        var xLinearPoverty = d3.scaleLinear()
-        .domain([0, d3.max(dataOutcomes, d => d.poverty)])
-        .range([chartHeight, 0]);
-        var yLinearHealthcare = d3.scaleLinear()
-        .domain([0, d3.max(dataOutcomes, d => d.healthcare)])
-        .range([chartHeight, 0]);
+    // Create a linear scale for the horizontal/vertical axis.
+    // 1. healthcare v poverty
+    var xLinearPoverty = d3.scaleLinear()
+    .domain([0, d3.max(dataOutcomes, d => d.poverty)])
+    .range([0, chartWidth]);
+    
+    var yLinearHealthcare = d3.scaleLinear()
+    .domain([0, d3.max(dataOutcomes, d => d.healthcare)])
+    .range([chartHeight, 0]);
 
+    // Create two new functions passing our scales in as arguments
+    // These will be used to create the chart's axes
+    var bottomAxis = d3.axisBottom(xLinearPoverty);
+    var leftAxis = d3.axisLeft(yLinearHealthcare);
+    
+    // append the axis to chart:
+    chartGroup.append("g")
+    .call(leftAxis);
+
+    chartGroup.append("g")
+    .attr("transform", `translate(0, ${chartHeight})`)
+    .call(bottomAxis);
+
+    // Configure a plot function to plot scatter points 
+    
+    
+    chartGroup.append('g')
+    .selectAll("dot")
+    .data(dataOutcomes)
+    .enter()
+    .append("circle")
+      .attr("cx", d=> d.poverty *10)
+      .attr("cy", d=> d.healthcare *10)
+      .attr("r", 1.5)
+      .style("fill", "#69b3a2")
 
 }).catch(function(error) {
     console.log(error);
