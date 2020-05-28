@@ -13,6 +13,9 @@ left: 60
 var chartWidth = svgWidth - margin.left - margin.right;
 var chartHeight = svgHeight - margin.top - margin.bottom;
 
+console.log(margin.left);
+console.log(margin.top);
+console.log(chartHeight);
 //Set SVG element with d3 within the html body (width and height attributes included)
 // Select body, append SVG area to it, and set its dimensions
 var svg = d3.select("#scatter")
@@ -40,19 +43,23 @@ d3.csv("data.csv").then(function(dataOutcomes){
     
     // Create a linear scale for the horizontal/vertical axis.
     // 1. healthcare v poverty
-    var xLinearPoverty = d3.scaleLinear()
+    var x= d3.scaleLinear()
     .domain([0, d3.max(dataOutcomes, d => d.poverty)])
     .range([0, chartWidth]);
     
-    var yLinearHealthcare = d3.scaleLinear()
+  
+    
+    var y = d3.scaleLinear()
     .domain([0, d3.max(dataOutcomes, d => d.healthcare)])
     .range([chartHeight, 0]);
 
     // Create two new functions passing our scales in as arguments
     // These will be used to create the chart's axes
-    var bottomAxis = d3.axisBottom(xLinearPoverty);
-    var leftAxis = d3.axisLeft(yLinearHealthcare);
+    var bottomAxis = d3.axisBottom(x);
+    var leftAxis = d3.axisLeft(y);
     
+    console.log(x);
+
     // append the axis to chart:
     chartGroup.append("g")
     .call(leftAxis);
@@ -69,8 +76,8 @@ d3.csv("data.csv").then(function(dataOutcomes){
     .data(dataOutcomes)
     .enter()
     .append("circle")
-      .attr("cx", d=> d.poverty *10)
-      .attr("cy", d=> d.healthcare *10)
+      .attr("cx", d=> d.poverty )
+      .attr("cy", d=> d.healthcare )
       .attr("r", 1.5)
       .style("fill", "#69b3a2")
 
