@@ -47,11 +47,9 @@ d3.csv("data.csv").then(function(dataOutcomes){
     .domain([0, d3.max(dataOutcomes, d => d.poverty)])
     .range([0, chartWidth]);
     
-  
-    
     var y = d3.scaleLinear()
     .domain([0, d3.max(dataOutcomes, d => d.healthcare)])
-    .range([chartHeight, 0]);
+    .range([chartHeight+1, 0]);
 
     // Create two new functions passing our scales in as arguments
     // These will be used to create the chart's axes
@@ -69,16 +67,14 @@ d3.csv("data.csv").then(function(dataOutcomes){
     .call(bottomAxis);
 
     // Configure a plot function to plot scatter points 
-    
-    
     chartGroup.append('g')
     .selectAll("dot")
     .data(dataOutcomes)
     .enter()
     .append("circle")
-      .attr("cx", d=> d.poverty )
-      .attr("cy", d=> d.healthcare )
-      .attr("r", 1.5)
+      .attr("cx", d=> x(d.poverty))
+      .attr("cy", d=> y(d.healthcare))
+      .attr("r", 3)
       .style("fill", "#69b3a2")
 
 }).catch(function(error) {
