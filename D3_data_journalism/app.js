@@ -21,10 +21,16 @@ var svg = d3.select("#scatter")
 .append("svg")
 .attr("width", svgWidth)
 .attr("height", svgHeight);
+var svg2 = d3.select("#scatter")
+.append("svg")
+.attr("width", svgWidth)
+.attr("height", svgHeight);
 
 ////Add a group area within the svg and set margins to top left of group
 // Append a group area, then set its margins
 var chartGroup = svg.append("g")
+.attr("transform", `translate(${margin.left}, ${margin.top})`);
+var chartGroup2= svg2.append("g")
 .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 //Load the data with d3.csv from data.csv file
@@ -42,7 +48,8 @@ d3.csv("data.csv").then(function(dataOutcomes){
         });
     
     // Create a linear scale for the horizontal/vertical axis.
-    // 1. healthcare v poverty
+    //--------------------------///
+    // 1. healthcare v poverty//
     var x= d3.scaleLinear()
     .domain([8, d3.max(dataOutcomes, d => d.poverty)+1])
     .range([0, chartWidth]);
@@ -63,7 +70,7 @@ d3.csv("data.csv").then(function(dataOutcomes){
     chartGroup.append("g")
     .attr("transform", `translate(0, ${chartHeight})`)
     .call(bottomAxis);
-/////
+
     // Create and place the "blocks" to hold the circles and text 
     var circles = chartGroup.selectAll("g")
     .data(dataOutcomes)
@@ -91,28 +98,7 @@ d3.csv("data.csv").then(function(dataOutcomes){
     .style("fill", "black")
     .text(d=>d.abbr);
 
-    //////
-    // Configure a plot function to plot scatter points 
-    // var circles= chartGroup.append('g')
-    // .selectAll("dot")
-    // .data(dataOutcomes)
-    // .enter()
-    // .append("circle")
-    // .attr("class", "dot")
-    //   .attr("cx", d=> x(d.poverty))
-    //   .attr("cy", d=> y(d.healthcare))
-    //   .attr("r", 3)
-    //   .style("fill", "#69b3a2");
-    
-    //   circles
-    //     .append("text")
-    //     .data(dataOutcomes)
-    //     .attr("x",d=> x(d.poverty))
-    //     .style("font-size", "16px") 
-    //     .style("fill", "black")
-    //     .text("d=> d.state");
-
-    // add title/labels
+    // add title/labels to chart
     chartGroup.append("text")
         .attr("x", (chartWidth / 2))             
         .attr("y", 0 - (margin.top / 2))
@@ -133,6 +119,81 @@ d3.csv("data.csv").then(function(dataOutcomes){
         .attr("text-anchor", "middle")  
         .style("font-size", "14px") 
         .text("Poverty (%)");
+
+
+    //--------------------------///
+    // 2. smokers v age(x)//
+    var x2= d3.scaleLinear()
+    .domain([25, d3.max(dataOutcomes, d => d.age)])
+    .range([0, chartWidth]);
+    
+    var y2 = d3.scaleLinear()
+    .domain([5, d3.max(dataOutcomes, d => d.smokes)+3])
+    .range([chartHeight, 0]);
+
+    // Create two new functions passing our scales in as arguments
+    // These will be used to create the chart's axes
+    var bottomAxis = d3.axisBottom(x2);
+    var leftAxis = d3.axisLeft(y2);
+
+    // append the axis to chart:
+    chartGroup2.append("g")
+    .call(leftAxis);
+
+    chartGroup2.append("g")
+    .attr("transform", `translate(0, ${chartHeight})`)
+    .call(bottomAxis);
+
+    // Create and place the "blocks" to hold the circles and text 
+    var circles = chartGroup2.selectAll("g")
+    .data(dataOutcomes)
+    .enter()
+    .append("g");
+    // .attr("transform", function(d){return `translate(${d.poverty},${d.healthcare}`})
+
+    // Configure a plot function to plot scatter points 
+    var circlePlot= circles
+    .append("circle")
+    .attr("class", "dot")
+      .attr("cx", d=> x2(d.age))
+      .attr("cy", d=> y2(d.smokes))
+      .attr("r", 9)
+      .attr("opacity", .5)
+      .style("stroke", "red")
+      .style("fill", "#69b3a2");
+    
+    //Create text for each circle group
+    circles.append("text")
+    .attr("dx", d=>x2(d.age))
+    .attr("dy", d=>y2(d.smokes))
+    .attr("text-anchor", "middle") 
+    .style("font-size", "10px") 
+    .style("fill", "black")
+    .text(d=>d.abbr);
+
+    // add title/labels to chart
+    chartGroup2.append("text")
+        .attr("x", (chartWidth / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .text("Age vs Smokers");
+    
+    chartGroup2.append("text")
+        .attr("y", 0-(margin.left / 2))
+        .attr("transform", `translate(0, ${chartHeight/2}) rotate(-90)`)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "14px") 
+        .text("Smokers (%)");
+    
+    chartGroup2.append("text")
+        .attr("x", (chartWidth / 2))             
+        .attr("y", (chartHeight+margin.bottom/2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "14px") 
+        .text("Age");
+
+        
     
 
 
