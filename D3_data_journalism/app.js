@@ -14,7 +14,6 @@ var chartWidth = svgWidth - margin.left - margin.right;
 var chartHeight = svgHeight - margin.top - margin.bottom;
 
 console.log(margin.left);
-console.log(margin.top);
 console.log(chartHeight);
 //Set SVG element with d3 within the html body (width and height attributes included)
 // Select body, append SVG area to it, and set its dimensions
@@ -72,10 +71,34 @@ d3.csv("data.csv").then(function(dataOutcomes){
     .data(dataOutcomes)
     .enter()
     .append("circle")
+    .attr("class", "dot")
       .attr("cx", d=> x(d.poverty))
       .attr("cy", d=> y(d.healthcare))
       .attr("r", 3)
-      .style("fill", "#69b3a2")
+      .style("fill", "#69b3a2");
+    
+    // add title/labels
+    chartGroup.append("text")
+        .attr("x", (chartWidth / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .text("Healthcare vs Poverty");
+    
+    chartGroup.append("text")
+        .attr("y", 0-(margin.left / 2))
+        .attr("transform", `translate(0, ${chartHeight/2}) rotate(-90)`)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "14px") 
+        .text("Healthcare (%)");
+    chartGroup.append("text")
+        .attr("x", (chartWidth / 2))             
+        .attr("y", (chartHeight+margin.bottom/2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "14px") 
+        .text("Poverty (%)");
+    
+
 
 }).catch(function(error) {
     console.log(error);
