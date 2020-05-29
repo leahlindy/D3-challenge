@@ -165,7 +165,7 @@ d3.csv("data.csv").then(function(dataOutcomes){
     //Create text for each circle group
     circles.append("text")
     .attr("dx", d=>x2(d.age))
-    .attr("dy", d=>y2(d.smokes))
+    .attr("dy", d=>y2(d.smokes)+2.5)
     .attr("text-anchor", "middle") 
     .style("font-size", "10px") 
     .style("fill", "black")
@@ -192,10 +192,6 @@ d3.csv("data.csv").then(function(dataOutcomes){
         .attr("text-anchor", "middle")  
         .style("font-size", "14px") 
         .text("Age");
-
-        
-    
-
 
 }).catch(function(error) {
     console.log(error);
