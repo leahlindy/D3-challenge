@@ -111,14 +111,14 @@ d3.csv("data.csv").then(function(dataOutcomes){
         .attr("transform", `translate(0, ${chartHeight/2}) rotate(-90)`)
         .attr("text-anchor", "middle")  
         .style("font-size", "14px") 
-        .text("Healthcare (%)");
+        .text("Lacks Healthcare (%)");
     
     chartGroup.append("text")
         .attr("x", (chartWidth / 2))             
         .attr("y", (chartHeight+margin.bottom/2))
         .attr("text-anchor", "middle")  
         .style("font-size", "14px") 
-        .text("Poverty (%)");
+        .text("In Poverty (%)");
 
 
     //--------------------------///
@@ -191,7 +191,7 @@ d3.csv("data.csv").then(function(dataOutcomes){
         .attr("y", (chartHeight+margin.bottom/2))
         .attr("text-anchor", "middle")  
         .style("font-size", "14px") 
-        .text("Age");
+        .text("Age (Median)");
 
 }).catch(function(error) {
     console.log(error);
