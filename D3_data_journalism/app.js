@@ -192,7 +192,27 @@ d3.csv("data.csv").then(function(dataOutcomes){
         .attr("text-anchor", "middle")  
         .style("font-size", "14px") 
         .text("Age (Median)");
+    
+        // add tool tip
+    // Step 1: Append tooltip div
+    var toolTip = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([80, -60])
+        .html(function(d) {
+          return (`<strong>${((d.smokes))}<strong><hr>${(d.age)}`);
+        });
+    // Step 2: Create the tooltip in chartGroup.
+    chartGroup2.call(toolTip);
 
-}).catch(function(error) {
-    console.log(error);
-})
+    // Step 3: Create "mouseover" event listener to display tooltip
+    circlePlot.on("mouseover", function(d) {
+      toolTip.show(d, this);
+    })
+    // Step 4: Create "mouseout" event listener to hide tooltip
+      .on("mouseout", function(d) {
+        toolTip.hide(d);
+      });
+    
+
+    }).catch(function(error) {
+        console.log(error)});
