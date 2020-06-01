@@ -20,6 +20,7 @@ function healthcareVSpoverty(){
     //Set SVG element with d3 within the html body (width and height attributes included)
     // Select body, append SVG area to it, and set its dimensions
     var svg = d3.select("#scatter")
+    .enter()
     .append("svg")
     .attr("width", svgWidth)
     .attr("height", svgHeight);
@@ -109,24 +110,24 @@ function healthcareVSpoverty(){
                 .text("In Poverty (%)");
             
             // Step 1: Append tooltip div
-            var toolTip1 = d3.tip()
+            var toolTip = d3.tip()
             .attr("class", "d3-tip")
             .html(function(d) {
                 return (`<p class='font-weight-bold'>${d.state}: </p>
                 <p>Lack Healthcare: % ${(d.healthcare)}<br> Poverty: ${(d.poverty)}</p>`);
             });
             // Step 2: Create the tooltip in chartGroup.
-            circlePlot.call(toolTip1);
+            circlePlot.call(toolTip);
         
             // Step 3: Create "mouseover" event listener to display tooltip
             circles.on("mouseover", function(d) {
-                toolTip1.style("cursor", "cell");
-                toolTip1.show(d, this);
+                toolTip.style("cursor", "cell");
+                toolTip.show(d, this);
                 })
             // Step 4: Create "mouseout" event listener to hide tooltip
                 .on("mouseout", function(d) {
-                    toolTip1.style("cursor", "default");
-                    toolTip1.hide(d);
+                    toolTip.style("cursor", "default");
+                    toolTip.hide(d);
                     }) 
             }).catch(function(error) {
                 console.log(error)});
@@ -137,6 +138,7 @@ function smokerVSage(){
     //Set SVG element with d3 within the html body (width and height attributes included)
     // Select body, append SVG area to it, and set its dimensions
     var svg = d3.select("#scatter")
+    .enter()
     .append("svg")
     .attr("width", svgWidth)
     .attr("height", svgHeight);
@@ -255,6 +257,7 @@ function obesityVSpoverty(){
     //Set SVG element with d3 within the html body (width and height attributes included)
     // Select body, append SVG area to it, and set its dimensions
     var svg = d3.select("#scatter")
+    .enter()
     .append("svg")
     .attr("width", svgWidth)
     .attr("height", svgHeight);
@@ -345,24 +348,24 @@ function obesityVSpoverty(){
                 .text("In Poverty (%)");
             
             // Step 1: Append tooltip div
-            var toolTip1 = d3.tip()
+            var toolTip = d3.tip()
             .attr("class", "d3-tip")
             .html(function(d) {
                 return (`<p class='font-weight-bold'>${d.state}: </p>
                 <p>Obesity: % ${(d.obesity)}<br> Poverty: ${(d.poverty)}</p>`);
             });
             // Step 2: Create the tooltip in chartGroup.
-            circlePlot.call(toolTip1);
+            circlePlot.call(toolTip);
         
             // Step 3: Create "mouseover" event listener to display tooltip
             circles.on("mouseover", function(d) {
-                toolTip1.style("cursor", "cell");
-                toolTip1.show(d, this);
+                toolTip.style("cursor", "cell");
+                toolTip.show(d, this);
                 })
             // Step 4: Create "mouseout" event listener to hide tooltip
                 .on("mouseout", function(d) {
-                    toolTip1.style("cursor", "default");
-                    toolTip1.hide(d);
+                    toolTip.style("cursor", "default");
+                    toolTip.hide(d);
                     }) 
             }).catch(function(error) {
                 console.log(error)});
@@ -373,6 +376,7 @@ function smokesVSpoverty(){
     //Set SVG element with d3 within the html body (width and height attributes included)
     // Select body, append SVG area to it, and set its dimensions
     var svg = d3.select("#scatter")
+    .enter()
     .append("svg")
     .attr("width", svgWidth)
     .attr("height", svgHeight);
@@ -383,7 +387,6 @@ function smokesVSpoverty(){
     
     //Load the data with d3.csv from data.csv file
     d3.csv("data.csv").then(function(dataOutcomes){
-        console.log(dataOutcomes);
         //Type cast data for variables needed in scatter (poverty, healthcate, smokes, age)
         dataOutcomes.forEach(function(data) {
             data.poverty = +data.poverty;
@@ -445,7 +448,7 @@ function smokesVSpoverty(){
                 .attr("y", 0 - (margin.top / 2))
                 .attr("text-anchor", "middle")  
                 .style("font-size", "16px") 
-                .text("Smokes vs Poverty");
+                .text("Smokers vs Poverty");
             
             chartGroup.append("text")
                 .attr("y", 0-(margin.left / 2))
@@ -462,31 +465,25 @@ function smokesVSpoverty(){
                 .text("In Poverty (%)");
             
             // Step 1: Append tooltip div
-            var toolTip1 = d3.tip()
+            var toolTip = d3.tip()
             .attr("class", "d3-tip")
             .html(function(d) {
                 return (`<p class='font-weight-bold'>${d.state}: </p>
                 <p>Smokers: % ${(d.smokes)}<br> Poverty: ${(d.poverty)}</p>`);
             });
             // Step 2: Create the tooltip in chartGroup.
-            circlePlot.call(toolTip1);
+            circlePlot.call(toolTip);
         
             // Step 3: Create "mouseover" event listener to display tooltip
             circles.on("mouseover", function(d) {
-                toolTip1.style("cursor", "cell");
-                toolTip1.show(d, this);
+                toolTip.style("cursor", "cell");
+                toolTip.show(d, this);
                 })
             // Step 4: Create "mouseout" event listener to hide tooltip
                 .on("mouseout", function(d) {
-                    toolTip1.style("cursor", "default");
-                    toolTip1.hide(d);
+                    toolTip.style("cursor", "default");
+                    toolTip.hide(d);
                     }) 
             }).catch(function(error) {
                 console.log(error)});
 }
-
-healthcareVSpoverty();
-smokerVSage();
-obesityVSpoverty();
-smokesVSpoverty();
-    
