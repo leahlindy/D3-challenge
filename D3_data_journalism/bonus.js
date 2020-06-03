@@ -126,6 +126,7 @@ function init() {
 // Step 2: get DOM change to call the getData function (form id=data_select)
 d3.selectAll("#data_select").on("change", getData);
 var scatter = d3.selectAll("#scatter").node();
+
 // Function called by DOM changes
 function getData() {
   var dropdownMenu = d3.select("#data_select");
@@ -146,6 +147,7 @@ function getData() {
   else if (dataset == 'Smokers vs Poverty') {
     data = smokesVSpoverty();
     }
+
 }
 // Update the restyled plot's values
 function updateGraph() {

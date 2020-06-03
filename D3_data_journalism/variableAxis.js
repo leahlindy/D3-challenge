@@ -4,7 +4,7 @@ var svgWidth = 500;
 var svgHeight = 500;
 // Define the chart's margins as an object
 var margin = {
-top: 20,
+top: 80,
 right: 40,
 bottom: 80,
 left: 100
@@ -42,7 +42,7 @@ function xScale(data, chosenXAxis) {
 function yScale(data, chosenYAxis) {
     // create scales
     var yLinearScale = d3.scaleLinear()
-      .domain([d3.min(data, d => d[chosenYAxis]) * 0.5,
+      .domain([d3.min(data, d => d[chosenYAxis]) * 0.7,
         d3.max(data, d => d[chosenYAxis]) * 1.1])
       .range([chartHeight,0]);
   
@@ -159,7 +159,8 @@ d3.csv("data.csv").then(function(data, err){
   
     // append y axis
     var yAxis = chartGroup.append("g")
-      .call(leftAxis);
+        .classed("y-axis", true)
+        .call(leftAxis);
 
     // Create and place the "blocks" to hold the circles and text 
     var circlesGroup = chartGroup.selectAll("circle")
@@ -214,27 +215,27 @@ d3.csv("data.csv").then(function(data, err){
         .attr("x", 0 - (chartHeight / 2))
         .attr("dy", "1em")
         .classed("axis-text", true)
-        .attr("value", "age") // value to grab for event listener
+        .attr("value", "healthcare") // value to grab for event listener
         .classed("active", true) 
         .text("Lack Healthcare (%)");
     
     var smokersLabel = yLabelsGroup.append("text")
-    .attr("y", 0 - 70)
-    .attr("x", 0 - (chartHeight / 2))
-    .attr("dy", "1em")
-    .classed("axis-text", true)
-    .attr("value", "smokes") // value to grab for event listener
-    .classed("inactive", true) 
-    .text("Smokers (%)");
+        .attr("y", 0 - 70)
+        .attr("x", 0 - (chartHeight / 2))
+        .attr("dy", "1em")
+        .classed("axis-text", true)
+        .attr("value", "smokes") // value to grab for event listener
+        .classed("inactive", true) 
+        .text("Smokers (%)");
 
     var obesityLabel = yLabelsGroup.append("text")
-    .attr("y", 0 - margin.left)
-    .attr("x", 0 - (chartHeight / 2))
-    .attr("dy", "1em")
-    .classed("axis-text", true)
-    .attr("value", "obesity") 
-    .classed("inactive", true) // value to grab for event listener
-    .text("Obesity (%)");
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (chartHeight / 2))
+        .attr("dy", "1em")
+        .classed("axis-text", true)
+        .attr("value", "obesity") 
+        .classed("inactive", true) // value to grab for event listener
+        .text("Obesity (%)");
 
     /// function to updateToolTip for both, the circles and their text
     circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
@@ -279,7 +280,7 @@ d3.csv("data.csv").then(function(data, err){
                 .classed("active", false)
                 .classed("inactive", true);
             }
-            else {
+            else if (chosenXAxis === "age"){
                 povertyLabel
                 .classed("active", false)
                 .classed("inactive", true);
@@ -343,7 +344,7 @@ d3.csv("data.csv").then(function(data, err){
                 .classed("active", false)
                 .classed("inactive", true);
             }
-            else {
+            else if (chosenYAxis === "obesity"){
                 healthcareLabel
                 .classed("active", false)
                 .classed("inactive", true);
