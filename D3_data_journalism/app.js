@@ -45,7 +45,9 @@ function yScale(data, chosenYAxis) {
       .domain([d3.min(data, d => d[chosenYAxis]) * 0.7,
         d3.max(data, d => d[chosenYAxis]) * 1.1])
       .range([chartHeight,0]);
-    console.log(d3.min(data, d => d[chosenYAxis]));
+    
+      //console.log(d3.min(data, d => d[chosenYAxis]));
+    
     return yLinearScale;
 
   }
