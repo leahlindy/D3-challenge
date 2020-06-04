@@ -45,9 +45,9 @@ function yScale(data, chosenYAxis) {
       .domain([d3.min(data, d => d[chosenYAxis]) * 0.7,
         d3.max(data, d => d[chosenYAxis]) * 1.1])
       .range([chartHeight,0]);
-  
+      
     return yLinearScale;
-  
+
   }
   // function used for updating xAxis var upon click on axis label
 function renderXAxes(newXScale, xAxis) {
@@ -140,6 +140,7 @@ d3.csv("data.csv").then(function(data, err){
         data.healthcare = +data.healthcare;
         data.obesity = +data.obesity;
         data.age = +data.age;
+        data.smokes = +data.smokes;
         });
         
     // Create a linear scale for the horizontal/vertical axis.- with functions created
