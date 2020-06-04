@@ -45,7 +45,7 @@ function yScale(data, chosenYAxis) {
       .domain([d3.min(data, d => d[chosenYAxis]) * 0.7,
         d3.max(data, d => d[chosenYAxis]) * 1.1])
       .range([chartHeight,0]);
-      
+    console.log(d3.min(data, d => d[chosenYAxis]));
     return yLinearScale;
 
   }
@@ -252,7 +252,7 @@ d3.csv("data.csv").then(function(data, err){
             // replaces chosenXAxis with value
             chosenXAxis = value;
 
-            console.log(chosenXAxis)
+            //console.log(chosenXAxis)
 
             // functions here found above csv import
             // updates x scale for new data
@@ -302,7 +302,7 @@ d3.csv("data.csv").then(function(data, err){
             // replaces chosenXAxis with value
             chosenYAxis = value;
 
-            console.log(chosenYAxis)
+            //console.log(chosenYAxis)
 
             // functions here found above csv import
             // updates x scale for new data
